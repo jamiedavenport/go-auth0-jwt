@@ -3,8 +3,8 @@ package auth0
 import "github.com/dgrijalva/jwt-go"
 
 type Parser struct {
-	domain string
-	audience string
+	Domain   string
+	Audience string
 }
 
 func (a Parser) Parse(token string) (*jwt.Token, error) {

@@ -10,7 +10,7 @@ import (
 
 func (a Parser) getPemCert(token *jwtgo.Token) (string, error) {
 	cert := ""
-	resp, err := http.Get(fmt.Sprintf("%s.well-known/jwks.json", a.domain))
+	resp, err := http.Get(fmt.Sprintf("%s.well-known/jwks.json", a.Domain))
 
 	if err != nil {
 		return cert, err
@@ -43,13 +43,13 @@ func (a Parser) validateJwt(token *jwtgo.Token) (interface{}, error) {
 		return nil, errors.New("unexpected signing method")
 	}
 
-	checkAud := token.Claims.(jwtgo.MapClaims).VerifyAudience(a.audience, false)
+	checkAud := token.Claims.(jwtgo.MapClaims).VerifyAudience(a.Audience, false)
 	if !checkAud {
 		return nil, errors.New("invalid audience")
 	}
 
 	// Verify 'iss' claim
-	checkIss := token.Claims.(jwtgo.MapClaims).VerifyIssuer(a.domain, false)
+	checkIss := token.Claims.(jwtgo.MapClaims).VerifyIssuer(a.Domain, false)
 	if !checkIss {
 		return nil, errors.New("invalid issuer")
 	}
